@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import {
-    Box, Typography, TextField, Select, MenuItem, IconButton, InputAdornment,
-    Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Card, CardContent
+    Box, Typography, TextField, Select, MenuItem, InputAdornment,
+    Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Checkbox,
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import '../styles/admin-css.css'; 
+import '../styles/admin-css.css';
+import { getStudentByRollNo } from '../services/api';
 
 const doctorData = [
     { id: 1, name: 'Dr. A. Sharma', specialization: 'Cardiologist', contact: '9876543210' },
@@ -19,6 +21,8 @@ const AdminDashboard = () => {
     const [filter, setFilter] = useState('rollno');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTab, setSelectedTab] = useState('search');
+    const [student, setStudent] = useState(null);
+    const [message, setMessage] = useState('');
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
@@ -32,9 +36,24 @@ const AdminDashboard = () => {
         setSelectedTab(tab);
     };
 
+    const handleSearch = async () => {
+        try {
+            const result = await getStudentByRollNo(searchQuery);
+            if (result.success) {
+                setStudent(result.data);
+                setMessage('');
+            } else {
+                setStudent(null);
+                setMessage('No student found');
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            setMessage('Error occurred while fetching data');
+        }
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
-            {/* Sidebar */}
             <Drawer
                 variant="permanent"
                 anchor="left"
@@ -60,14 +79,10 @@ const AdminDashboard = () => {
                 </List>
             </Drawer>
 
-            {/* Main Content */}
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 {selectedTab === 'search' && (
                     <>
-                        <Typography variant="h4" gutterBottom>
-                            Search Student Records
-                        </Typography>
-                        {/* Search Bar */}
+                        <Typography variant="h4" gutterBottom>Search Student Records</Typography>
                         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
                             <TextField
                                 fullWidth
@@ -82,16 +97,12 @@ const AdminDashboard = () => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                             />
                             <Select
                                 value={filter}
                                 onChange={handleFilterChange}
                                 variant="outlined"
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <FilterListIcon />
-                                    </InputAdornment>
-                                }
                             >
                                 <MenuItem value="rollno">Roll No</MenuItem>
                                 <MenuItem value="dept">Department</MenuItem>
@@ -99,29 +110,44 @@ const AdminDashboard = () => {
                             </Select>
                         </Box>
 
-                        {/* Search Results */}
-                        <Typography variant="body1" color="text.secondary">
-                            Showing results for "{searchQuery}" in "{filter}"
-                        </Typography>
+                        {message && <Typography color="error">{message}</Typography>}
+                        {student && (
+                            <TableContainer component={Paper} sx={{ mt: 2 }}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Roll No</TableCell>
+                                            <TableCell>Name</TableCell>
+                                            <TableCell>Year and Dept</TableCell>
+                                            <TableCell>Mobile</TableCell>
+                                            <TableCell>Mark as Visited</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>{student.ROLLNO}</TableCell>
+                                            <TableCell>{student.NAME}</TableCell>
+                                            <TableCell>{`${student.YEAR} - ${student.DEPT}`}</TableCell>
+                                            <TableCell>{student.MOBILE}</TableCell>
+                                            <TableCell><Checkbox /></TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        )}
                     </>
                 )}
 
                 {selectedTab === 'doctors' && (
                     <>
-                        <Typography variant="h4" gutterBottom>
-                            Doctor Details
-                        </Typography>
-                        <Box sx={{ display: 'grid', gap: 2 }}>
-                            {doctorData.map((doctor) => (
-                                <Card key={doctor.id} sx={{ bgcolor: '#e0f7fa', borderRadius: 2 }}>
-                                    <CardContent>
-                                        <Typography variant="h6">{doctor.name}</Typography>
-                                        <Typography variant="body2">Specialization: {doctor.specialization}</Typography>
-                                        <Typography variant="body2">Contact: {doctor.contact}</Typography>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </Box>
+                        <Typography variant="h4" gutterBottom>Doctor Details</Typography>
+                        {doctorData.map((doctor) => (
+                            <Box key={doctor.id} sx={{ bgcolor: '#e0f7fa', p: 2, borderRadius: 2, mb: 1 }}>
+                                <Typography variant="h6">{doctor.name}</Typography>
+                                <Typography>Specialization: {doctor.specialization}</Typography>
+                                <Typography>Contact: {doctor.contact}</Typography>
+                            </Box>
+                        ))}
                     </>
                 )}
             </Box>

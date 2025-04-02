@@ -56,3 +56,27 @@ body {
     font-size: 0.9rem;
     color: #555;
 }
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-table th, .student-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.student-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.student-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.visited-checkbox {
+    transform: scale(1.2);
+}
+
