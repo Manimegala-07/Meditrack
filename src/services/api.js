@@ -1,23 +1,25 @@
+// services/api.js
 import axios from 'axios';
 
-// Get student by roll number
-export const getStudentByRollNo = async (rollno) => {
-    try {
-        const response = await axios.get(`http://localhost:5000/api/student/${rollno}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching student data:", error);
-        throw error;
-    }
+export const getStudent = async (filter, value) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/students`, {
+      params: { [filter]: value }
+    });
+    return { success: true, data: response.data[0] }; // assuming you want just the first match
+  } catch (err) {
+    console.error(err);
+    return { success: false, message: 'Error fetching student' };
+  }
 };
 
-// Get all students
-export const getAllStudents = async () => {
+export const markStudentAsViewed = async (rollNo) => {
     try {
-        const response = await axios.get('http://localhost:5000/api/students');
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching all students:", error);
-        throw error;
+      const response = await axios.put(`http://localhost:5000/api/students/mark-viewed/${rollNo}`);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return { success: false, message: 'Error updating student' };
     }
-};
+  };
+  

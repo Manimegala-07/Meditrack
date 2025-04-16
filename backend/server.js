@@ -1,48 +1,32 @@
 const express = require('express');
-const xlsx = require('xlsx');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const studentRoutes = require('./routes/studentRoutes');
 const cors = require('cors');
-const path = require('path');
 
+dotenv.config();
 const app = express();
+
+// Middleware
 app.use(cors());
+app.use(express.json());
 
-// Read the Excel file once during server startup
-const filePath = path.join(__dirname, 'data', 'data-s.xlsx');
-const workbook = xlsx.readFile(filePath);
-const sheetName = workbook.SheetNames[0];
-const worksheet = workbook.Sheets[sheetName];
+// Routes
+app.use('/api', studentRoutes);
 
-// Importing the API routes
-const apiRoutes = require('./routes/api');
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('✅ MongoDB Connected');
+    app.listen(5000, () => console.log('🚀 Server running on port 5000'));
+  })
+  .catch((err) => console.log('❌ DB Connection Error:', err));
 
-app.use('/api', apiRoutes);
-
-// Convert Excel data to JSON
-const students = xlsx.utils.sheet_to_json(worksheet);
-
-app.get('/', (req, res) => {
-    res.send('Server is running smoothly!');
-});
-
-// API endpoint to search by roll number
-app.get('/api/student/:rollno', (req, res) => {
-    const rollno = req.params.rollno;
-    const student = students.find((s) => s?.ROLLNO?.toString() === rollno);
-
-    if (student) {
-        res.json({ success: true, data: student });
-    } else {
-        res.status(404).json({ success: false, message: 'Student not found' });
-    }
-});
-
-// API endpoint to get all students (for testing or listing)
-app.get('/api/students', (req, res) => {
-    res.json({ success: true, data: students });
-});
+  // Import routes
+app.use('/api', studentRoutes); // This means routes start with /api
 
 // Start the server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

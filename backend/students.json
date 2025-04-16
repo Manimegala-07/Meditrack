@@ -1,0 +1,74 @@
+[
+  {
+    "rollNo": 2024175052,
+    "name": "Dhanu",
+    "phone": 9865234175,
+    "department": "IST",
+    "age": 20,
+    "gender": "Female",
+    "address": "Chennai"
+  },
+  {
+    "rollNo": 2024175053,
+    "name": "Trisha",
+    "phone": 6589742351,
+    "department": "IST",
+    "age": 21,
+    "gender": "Male",
+    "address": "Coimbatore"
+  },
+  {
+    "rollNo": 2024175054,
+    "name": "Mani",
+    "phone": 9658413457,
+    "department": "CS",
+    "age": 22,
+    "gender": "Female",
+    "address": "Chennai"
+  },
+  {
+    "rollNo": 2024175055,
+    "name": "Kavi",
+    "phone": 7569841235,
+    "department": "CS",
+    "age": 20,
+    "gender": "Male",
+    "address": "Coimabatore"
+  },
+  {
+    "rollNo": 2024175056,
+    "name": "Raja",
+    "phone": 8654123975,
+    "department": "EEE",
+    "age": 21,
+    "gender": "Male",
+    "address": "Chennai"
+  },
+  {
+    "rollNo": 2024175057,
+    "name": "Priya",
+    "phone": 9574621574,
+    "department": "EEE",
+    "age": 22,
+    "gender": "Female",
+    "address": "Chennai"
+  },
+  {
+    "rollNo": 2024175058,
+    "name": "Aadhi",
+    "phone": 7896542856,
+    "department": "ECE",
+    "age": 21,
+    "gender": "Female",
+    "address": "Erode"
+  },
+  {
+    "rollNo": 2024175059,
+    "name": "Nila",
+    "phone": 9865742563,
+    "department": "ECE",
+    "age": 25,
+    "gender": "Female",
+    "address": "Erode"
+  }
+]

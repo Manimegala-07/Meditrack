@@ -8,8 +8,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import '../styles/admin-css.css';
-import { getStudentByRollNo } from '../services/api';
+
+import { getStudent ,markStudentAsViewed } from '../services/api';
 
 const doctorData = [
     { id: 1, name: 'Dr. A. Sharma', specialization: 'Cardiologist', contact: '9876543210' },
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
 
     const handleSearch = async () => {
         try {
-            const result = await getStudentByRollNo(searchQuery);
+            const result = await getStudent(filter, searchQuery);
             if (result.success) {
                 setStudent(result.data);
                 setMessage('');
@@ -51,6 +51,7 @@ const AdminDashboard = () => {
             setMessage('Error occurred while fetching data');
         }
     };
+    
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -104,9 +105,9 @@ const AdminDashboard = () => {
                                 onChange={handleFilterChange}
                                 variant="outlined"
                             >
-                                <MenuItem value="rollno">Roll No</MenuItem>
-                                <MenuItem value="dept">Department</MenuItem>
-                                <MenuItem value="mobileno">Mobile No</MenuItem>
+                                <MenuItem value="rollNo">Roll No</MenuItem>
+                                <MenuItem value="department">Department</MenuItem>
+                                <MenuItem value="phone">Mobile No</MenuItem>
                             </Select>
                         </Box>
 
@@ -116,10 +117,10 @@ const AdminDashboard = () => {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Roll No</TableCell>
-                                            <TableCell>Name</TableCell>
-                                            <TableCell>Year and Dept</TableCell>
-                                            <TableCell>Mobile</TableCell>
+                                            <TableCell>{student.rollNo}</TableCell>
+                                            <TableCell>{student.name}</TableCell>
+                                            <TableCell>{student.department}</TableCell>
+                                            <TableCell>{student.phone}</TableCell>
                                             <TableCell>Mark as Visited</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -129,7 +130,18 @@ const AdminDashboard = () => {
                                             <TableCell>{student.NAME}</TableCell>
                                             <TableCell>{`${student.YEAR} - ${student.DEPT}`}</TableCell>
                                             <TableCell>{student.MOBILE}</TableCell>
-                                            <TableCell><Checkbox /></TableCell>
+                                            <TableCell>
+                                            <Checkbox
+                                             checked={student.viewed || false}
+                                                onChange={async () => {
+                                                const result = await markStudentAsViewed(student.rollNo);
+                                                if (result.success) {
+                                                setStudent(result.data); // update UI with latest data
+                                              }
+                                            }}
+                                         />
+                                             </TableCell>
+
                                         </TableRow>
                                     </TableBody>
                                 </Table>
