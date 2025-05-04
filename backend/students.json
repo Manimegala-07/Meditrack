@@ -1,74 +1,66 @@
 [
   {
-    "rollNo": 2024175052,
+    "regno": 2024175052,
     "name": "Dhanu",
-    "phone": 9865234175,
+    "mobile": 9865234175,
     "department": "IST",
-    "age": 20,
-    "gender": "Female",
-    "address": "Chennai"
+    "year": "3rd",
+    "gender": "Female"
   },
   {
-    "rollNo": 2024175053,
+    "regno": 2024175053,
     "name": "Trisha",
-    "phone": 6589742351,
+    "mobile": 6589742351,
     "department": "IST",
-    "age": 21,
-    "gender": "Male",
-    "address": "Coimbatore"
+    "year": "1st",
+    "gender": "Male"
   },
   {
-    "rollNo": 2024175054,
+    "regno": 2024175054,
     "name": "Mani",
-    "phone": 9658413457,
+    "mobile": 9658413457,
     "department": "CS",
-    "age": 22,
-    "gender": "Female",
-    "address": "Chennai"
+    "year": "3rd",
+    "gender": "Female"
   },
   {
-    "rollNo": 2024175055,
+    "regno": 2024175055,
     "name": "Kavi",
-    "phone": 7569841235,
+    "mobile": 7569841235,
     "department": "CS",
-    "age": 20,
-    "gender": "Male",
-    "address": "Coimabatore"
+    "year": "1nd",
+    "gender": "Male"
   },
   {
-    "rollNo": 2024175056,
+    "regno": 2024175056,
     "name": "Raja",
-    "phone": 8654123975,
+    "mobile": 8654123975,
     "department": "EEE",
-    "age": 21,
-    "gender": "Male",
-    "address": "Chennai"
+    "year": "2nd",
+    "gender": "Male"
   },
   {
-    "rollNo": 2024175057,
+    "regno": 2024175057,
     "name": "Priya",
-    "phone": 9574621574,
+    "mobile": 9574621574,
     "department": "EEE",
-    "age": 22,
-    "gender": "Female",
-    "address": "Chennai"
+    "year": "2nd",
+    "gender": "Female"
   },
   {
-    "rollNo": 2024175058,
+    "regno": 2024175058,
     "name": "Aadhi",
-    "phone": 7896542856,
+    "mobile": 7896542856,
     "department": "ECE",
-    "age": 21,
-    "gender": "Female",
-    "address": "Erode"
+    "year": "4th",
+    "gender": "Female"
   },
   {
-    "rollNo": 2024175059,
+    "regno": 2024175059,
     "name": "Nila",
-    "phone": 9865742563,
+    "mobile": 9865742563,
     "department": "ECE",
-    "age": 25,
-    "gender": "Female",
-    "address": "Erode"
+    "year": "4th",
+    "gender": "Female"
   }
 ]

@@ -9,7 +9,7 @@ const searchStudents = async (req, res) => {
     const students = await Student.find({
       $or: [
         { name: regex },
-        { rollNo: regex },
+        { regno: regex },
         { phone: regex },
         { department: regex }
       ]

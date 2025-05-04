@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
-import StaffDashboard from "./pages/StaffDashboard";
+import PharmacyPage from "./pages/StaffDashboard";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import ReactDOM from "react-dom/client";
 
@@ -18,7 +18,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-          <Route path="/staff-dashboard" element={<StaffDashboard />} />
+          <Route path="/staff-dashboard" element={<PharmacyPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

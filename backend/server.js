@@ -1,32 +1,32 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const studentRoutes = require('./routes/studentRoutes');
-const cors = require('cors');
+const cors = require('cors');  // If you're running the frontend on a different port
+const studentRoutes = require('./routes/studentRoutes');  // Adjust the path
+const adminRoutes = require("./routes/adminroutes");
 
-dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors());  // Allow CORS if frontend and backend are on different ports
+app.use(express.json());  // Parse JSON bodies
 
-// Routes
-app.use('/api', studentRoutes);
+// Use the route for student
+ app.use(studentRoutes);
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('✅ MongoDB Connected');
-    app.listen(5000, () => console.log('🚀 Server running on port 5000'));
-  })
-  .catch((err) => console.log('❌ DB Connection Error:', err));
+// Mount routes with different base paths
+// app.use("/api/admin", adminRoutes);   // e.g., /api/admin?name=...
+// app.use("/api/doctor", studentRoutes); // e.g., /api/doctor/getByRegNo/12345
 
-  // Import routes
-app.use('/api', studentRoutes); // This means routes start with /api
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/mediTrack', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.log(err));
+
+app.listen(5000, () => {
+  console.log('Server running on http://localhost:5000');
 });

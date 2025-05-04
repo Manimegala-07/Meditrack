@@ -1,17 +1,12 @@
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-  rollNo: { type: String, required: true, unique: true },
-  name: String,
-  phone: String,
-  department: String,
-  age: Number,
-  gender: String,
-  address: String,
-
-  viewed: { type: Boolean, default: false },
-  viewedAt: { type: Date }
-  
-}, { timestamps: true });
+  regno: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  department: { type: String, required: true },
+  year: { type: String, required: true },
+  gender: { type: String, required: true },
+  mobile: { type: String, required: true },
+}, { collection: 'students' });  // <-- ADD THIS
 
 module.exports = mongoose.model('Student', studentSchema);
